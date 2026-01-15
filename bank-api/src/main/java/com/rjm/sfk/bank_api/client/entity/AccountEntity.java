@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serial;
 import java.math.BigDecimal;
@@ -34,7 +35,8 @@ public class AccountEntity extends AuditEntity {
     private static final long serialVersionUID = -4017839746579335088L;
 
     @Id
-    @GeneratedValue(generator = "uuid2")
+    @GeneratedValue
+    @UuidGenerator
     @Column(name = "ACCOUNT_CODE", nullable = false)
     private String accountCode;
 
@@ -54,6 +56,6 @@ public class AccountEntity extends AuditEntity {
     private Boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CLIENT_CODE", referencedColumnName = "CLIENT_CODE", nullable = false, updatable = false)
+    @JoinColumn(name = "CLIENT_CODE", referencedColumnName = "CLIENT_CODE", insertable = false, updatable = false)
     private ClientEntity client;
 }

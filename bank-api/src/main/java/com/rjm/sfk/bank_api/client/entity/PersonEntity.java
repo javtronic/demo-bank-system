@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serial;
 
@@ -30,7 +31,8 @@ public class PersonEntity extends AuditEntity {
     private static final long serialVersionUID = -5431935616642689940L;
 
     @Id
-    @GeneratedValue(generator = "uuid2")
+    @GeneratedValue
+    @UuidGenerator
     @Column(name = "PERSON_CODE", nullable = false)
     private String personCode;
 

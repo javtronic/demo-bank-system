@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serial;
 import java.math.BigDecimal;
@@ -35,7 +36,8 @@ public class TransactionEntity extends AuditEntity {
     private static final long serialVersionUID = -1234567890123456789L;
 
     @Id
-    @GeneratedValue(generator = "uuid2")
+    @GeneratedValue
+    @UuidGenerator
     @Column(name = "TRANSACTION_CODE", nullable = false)
     private String transactionCode;
 
@@ -55,6 +57,6 @@ public class TransactionEntity extends AuditEntity {
     private BigDecimal balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACCOUNT_CODE", referencedColumnName = "ACCOUNT_CODE", nullable = false, updatable = false)
+    @JoinColumn(name = "ACCOUNT_CODE", referencedColumnName = "ACCOUNT_CODE", insertable = false, updatable = false)
     private AccountEntity account;
 }

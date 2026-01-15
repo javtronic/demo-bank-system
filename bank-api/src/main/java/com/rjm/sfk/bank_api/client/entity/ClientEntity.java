@@ -1,6 +1,7 @@
 package com.rjm.sfk.bank_api.client.entity;
 
 import com.rjm.sfk.bank_api.client.entity.audit.AuditEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serial;
 
@@ -33,12 +35,11 @@ public class ClientEntity extends AuditEntity {
     private static final long serialVersionUID = -7373534129971049719L;
 
     @Id
-    @GeneratedValue(generator = "uuid2")
+    @GeneratedValue
+    @UuidGenerator
     @Column(name = "CLIENT_CODE", nullable = false)
     private String clientCode;
 
-    @Column(name = "PERSON_CODE", insertable = false, updatable = false)
-    private String personCode;
 
     @Column(name = "PASSWORD", nullable = false)
     private String password;
@@ -46,7 +47,10 @@ public class ClientEntity extends AuditEntity {
     @Column(name = "CLIENT_STATUS", nullable = false)
     private Boolean clientStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERSON_CODE", referencedColumnName = "PERSON_CODE", nullable = false, updatable = false)
+    /**
+     * FK Person
+     */
+    @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERSON_CODE", nullable = false)
     private PersonEntity person;
 }
