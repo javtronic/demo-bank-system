@@ -6,6 +6,7 @@ import com.rjm.sfk.bank_api.vo.TransactionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,7 @@ public class TransactionController {
     @PostMapping("/register")
     public ResponseEntity<Object> registerTransaction(@RequestBody TransactionVO transactionVO) {
         transactionService.registerTransaction(transactionVO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**

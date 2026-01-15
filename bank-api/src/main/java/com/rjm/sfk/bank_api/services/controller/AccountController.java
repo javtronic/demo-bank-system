@@ -4,6 +4,7 @@ import com.rjm.sfk.bank_api.core.service.AccountService;
 import com.rjm.sfk.bank_api.vo.AccountVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class AccountController {
     @PostMapping("/create")
     public ResponseEntity<Object> createAccount(@RequestBody AccountVO accountVO) {
         accountService.createAccount(accountVO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
@@ -41,6 +42,6 @@ public class AccountController {
     @GetMapping("/inactive")
     public ResponseEntity<Object> inactiveAccount(@RequestParam("accountCode") String accountCode) {
         accountService.inactiveAccount(accountCode);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

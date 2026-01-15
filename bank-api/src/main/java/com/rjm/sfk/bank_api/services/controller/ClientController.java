@@ -4,6 +4,7 @@ import com.rjm.sfk.bank_api.core.service.ClientService;
 import com.rjm.sfk.bank_api.vo.ClientVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class ClientController {
     @PostMapping("/create")
     public ResponseEntity<Object> createClient(@RequestBody ClientVO clientVO) {
         clientService.createClient(clientVO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
@@ -46,7 +47,7 @@ public class ClientController {
     @PostMapping("/update")
     public ResponseEntity<Object> updateClient(@RequestBody ClientVO clientVO) {
         clientService.updateClient(clientVO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     /**
@@ -70,6 +71,6 @@ public class ClientController {
     @GetMapping("/inactive")
     public ResponseEntity<Object> inactiveClient(@RequestParam("clientCode") String clientCode) {
         clientService.inactiveClient(clientCode);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
