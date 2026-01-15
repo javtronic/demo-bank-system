@@ -10,4 +10,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface IAccountRepository extends JpaRepository<AccountEntity, String> {
 
+    /**
+     * Checks if an account exists by its account number.
+     *
+     * @param accountNumber the account number
+     * @return true if the account exists, false otherwise
+     */
+    boolean existsByAccountNumber(String accountNumber);
 }

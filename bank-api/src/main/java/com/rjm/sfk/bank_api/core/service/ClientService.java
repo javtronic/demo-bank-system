@@ -3,7 +3,6 @@ package com.rjm.sfk.bank_api.core.service;
 import com.rjm.sfk.bank_api.client.entity.ClientEntity;
 import com.rjm.sfk.bank_api.client.entity.PersonEntity;
 import com.rjm.sfk.bank_api.core.repository.IClientRepository;
-import com.rjm.sfk.bank_api.core.repository.IPersonRepository;
 import com.rjm.sfk.bank_api.core.repository.query.IClientQueryRepository;
 import com.rjm.sfk.bank_api.vo.ClientVO;
 import org.springframework.beans.BeanUtils;
@@ -15,16 +14,18 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 
+/**
+ * Client service.
+ *
+ * @author javtronic
+ */
 @Lazy
 @Validated
 @Service
 public class ClientService {
 
     @Autowired
-    private IClientRepository IClientRepository;
-
-    @Autowired
-    private IPersonRepository IPersonRepository;
+    private IClientRepository clientRepository;
 
     @Autowired
     private IClientQueryRepository clientQueryRepository;
@@ -50,7 +51,7 @@ public class ClientService {
         client.setCreatedDate(new Date());
         client.setCreatedByUser("SYSTEM");
         client.setCreatedFromIp("127.0.0.1");
-        IClientRepository.save(client);
+        clientRepository.save(client);
     }
 
 
@@ -65,7 +66,7 @@ public class ClientService {
             return;
         }
 
-        ClientEntity client = IClientRepository.findById(clientVO.getClientCode())
+        ClientEntity client = clientRepository.findById(clientVO.getClientCode())
                 .orElse(new ClientEntity());
         client.setClientStatus(clientVO.getClientStatus());
         client.setPassword(clientVO.getPassword());
@@ -77,7 +78,7 @@ public class ClientService {
         client.setLastModifiedByUser("SYSTEM");
         client.setUpdatedFromIp("127.0.0.1");
 
-        IClientRepository.save(client);
+        clientRepository.save(client);
     }
 
 
@@ -98,7 +99,7 @@ public class ClientService {
      */
     @Transactional
     public void inactiveClient(String clientCode) {
-        ClientEntity client = IClientRepository.findById(clientCode)
+        ClientEntity client = clientRepository.findById(clientCode)
                 .orElse(new ClientEntity());
 
         client.setClientStatus(false);

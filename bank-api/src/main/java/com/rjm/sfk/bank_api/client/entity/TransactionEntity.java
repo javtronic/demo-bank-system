@@ -41,9 +41,6 @@ public class TransactionEntity extends AuditEntity {
     @Column(name = "TRANSACTION_CODE", nullable = false)
     private String transactionCode;
 
-    @Column(name = "ACCOUNT_CODE",  insertable = false, updatable = false)
-    private String accountCode;
-
     @Column(name = "TRANSACTION_DATE", nullable = false)
     private Date transactionDate;
 
@@ -56,7 +53,11 @@ public class TransactionEntity extends AuditEntity {
     @Column(name = "BALANCE", nullable = false)
     private BigDecimal balance;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACCOUNT_CODE", referencedColumnName = "ACCOUNT_CODE", insertable = false, updatable = false)
+    /**
+     * FK Account
+     */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ACCOUNT_CODE", nullable = false)
     private AccountEntity account;
+
 }

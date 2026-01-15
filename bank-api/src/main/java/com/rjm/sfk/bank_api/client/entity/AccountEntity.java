@@ -40,9 +40,6 @@ public class AccountEntity extends AuditEntity {
     @Column(name = "ACCOUNT_CODE", nullable = false)
     private String accountCode;
 
-    @Column(name = "CLIENT_CODE",  insertable = false, updatable = false)
-    private String clientCode;
-
     @Column(name = "ACCOUNT_NUMBER", nullable = false, unique = true)
     private String accountNumber;
 
@@ -53,9 +50,12 @@ public class AccountEntity extends AuditEntity {
     private BigDecimal initialBalance;
 
     @Column(name = "ACCOUNT_STATUS", nullable = false)
-    private Boolean status;
+    private Boolean accountStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CLIENT_CODE", referencedColumnName = "CLIENT_CODE", insertable = false, updatable = false)
+    /**
+     * FK Client
+     */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CLIENT_CODE", nullable = false)
     private ClientEntity client;
 }
