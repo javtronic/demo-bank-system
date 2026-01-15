@@ -1,8 +1,11 @@
 package com.rjm.sfk.bank_api.client.entity;
 
 import com.rjm.sfk.bank_api.client.entity.audit.AuditEntity;
+import com.rjm.sfk.bank_api.client.enums.GenderType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -39,8 +42,9 @@ public class PersonEntity extends AuditEntity {
     @Column(name = "NAME", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "GENDER", nullable = false)
-    private String gender;
+    private GenderType gender;
 
     @Column(name = "AGE", nullable = false)
     private Integer age;

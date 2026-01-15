@@ -49,6 +49,7 @@ public class AccountService {
 
         AccountEntity account = new AccountEntity();
         BeanUtils.copyProperties(accountVO, account);
+        account.setCurrentBalance(account.getInitialBalance());
         account.setClient(client);
         account.setStatus(true);
         account.setCreatedDate(new Date());

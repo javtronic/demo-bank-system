@@ -1,5 +1,6 @@
 package com.rjm.sfk.bank_api.vo;
 
+import com.rjm.sfk.bank_api.client.enums.GenderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class PersonVO {
 
     private String personCode;
     private String name;
-    private String gender;
+    private GenderType gender;
     private Integer age;
     private String identification;
     private String phoneNumber;

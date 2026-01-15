@@ -5,6 +5,7 @@ import com.rjm.sfk.bank_api.client.entity.PersonEntity;
 import com.rjm.sfk.bank_api.core.repository.IClientRepository;
 import com.rjm.sfk.bank_api.core.repository.query.IClientQueryRepository;
 import com.rjm.sfk.bank_api.vo.ClientVO;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -67,7 +68,8 @@ public class ClientService {
         }
 
         ClientEntity client = clientRepository.findById(clientVO.getClientCode())
-                .orElse(new ClientEntity());
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
+
         client.setClientStatus(clientVO.getClientStatus());
         client.setPassword(clientVO.getPassword());
 

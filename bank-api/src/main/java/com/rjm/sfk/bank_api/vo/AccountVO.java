@@ -1,5 +1,6 @@
 package com.rjm.sfk.bank_api.vo;
 
+import com.rjm.sfk.bank_api.client.enums.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,8 @@ public class AccountVO {
     private String accountCode;
     private String clientCode;
     private String accountNumber;
-    private String accountType;
+    private AccountType accountType;
     private BigDecimal initialBalance;
+    private BigDecimal currentBalance;
     private Boolean accountStatus;
 }

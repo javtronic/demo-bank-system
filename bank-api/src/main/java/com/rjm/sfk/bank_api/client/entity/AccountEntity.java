@@ -1,8 +1,11 @@
 package com.rjm.sfk.bank_api.client.entity;
 
 import com.rjm.sfk.bank_api.client.entity.audit.AuditEntity;
+import com.rjm.sfk.bank_api.client.enums.AccountType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -43,11 +46,15 @@ public class AccountEntity extends AuditEntity {
     @Column(name = "ACCOUNT_NUMBER", nullable = false, unique = true)
     private String accountNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "ACCOUNT_TYPE", nullable = false)
-    private String accountType;
+    private AccountType accountType;
 
     @Column(name = "INITIAL_BALANCE", nullable = false)
     private BigDecimal initialBalance;
+
+    @Column(name = "CURRENT_BALANCE", nullable = false)
+    private BigDecimal currentBalance;
 
     @Column(name = "ACCOUNT_STATUS", nullable = false)
     private Boolean accountStatus;

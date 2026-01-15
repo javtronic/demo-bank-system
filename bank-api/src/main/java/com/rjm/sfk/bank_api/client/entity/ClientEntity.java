@@ -40,7 +40,6 @@ public class ClientEntity extends AuditEntity {
     @Column(name = "CLIENT_CODE", nullable = false)
     private String clientCode;
 
-
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 

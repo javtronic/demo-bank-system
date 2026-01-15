@@ -1,8 +1,11 @@
 package com.rjm.sfk.bank_api.client.entity;
 
 import com.rjm.sfk.bank_api.client.entity.audit.AuditEntity;
+import com.rjm.sfk.bank_api.client.enums.TransactionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -44,8 +47,9 @@ public class TransactionEntity extends AuditEntity {
     @Column(name = "TRANSACTION_DATE", nullable = false)
     private Date transactionDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "TRANSACTION_TYPE", nullable = false)
-    private String transactionType;
+    private TransactionType transactionType;
 
     @Column(name = "AMOUNT", nullable = false)
     private BigDecimal amount;
