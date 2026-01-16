@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Client service.
@@ -110,4 +111,12 @@ public class ClientService {
         client.setUpdatedFromIp("127.0.0.1");
     }
 
+    /**
+     * Finds all clients.
+     *
+     * @return a list of client VO objects
+     */
+    public List<ClientVO> findAllClients() {
+        return clientQueryRepository.findAllClients();
+    }
 }

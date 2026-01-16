@@ -8,6 +8,8 @@ import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static com.rjm.sfk.bank_api.client.entity.QClientEntity.clientEntity;
 import static com.rjm.sfk.bank_api.client.entity.QPersonEntity.personEntity;
 
@@ -56,5 +58,29 @@ public class ClientQueryRepository implements IClientQueryRepository {
                 .innerJoin(clientEntity.person, personEntity)
                 .where(clientEntity.clientCode.eq(clientCode))
                 .fetchOne();
+    }
+
+    @Override
+    public List<ClientVO> findAllClients() {
+        return queryFactory
+                .select(Projections.bean(ClientVO.class,
+                        clientEntity.clientCode,
+                        clientEntity.password,
+                        clientEntity.clientStatus,
+                        Projections.bean(PersonVO.class,
+                                personEntity.personCode,
+                                personEntity.name,
+                                personEntity.gender,
+                                personEntity.age,
+                                personEntity.identification,
+                                personEntity.phoneNumber,
+                                personEntity.address,
+                                personEntity.status
+                        ).as("person")
+                ))
+                .from(clientEntity)
+                .innerJoin(clientEntity.person, personEntity)
+                .orderBy(clientEntity.createdDate.desc())
+                .fetch();
     }
 }

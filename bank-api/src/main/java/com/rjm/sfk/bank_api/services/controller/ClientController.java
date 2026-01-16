@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Client controller
  *
@@ -72,5 +74,16 @@ public class ClientController {
     public ResponseEntity<Object> inactiveClient(@RequestParam("clientCode") String clientCode) {
         clientService.inactiveClient(clientCode);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Finds all clients.
+     *
+     * @return a ResponseEntity with OK status and a list of client VO objects as the body
+     */
+    @GetMapping("/findAll")
+    public ResponseEntity<List<ClientVO>> findAll() {
+        List<ClientVO> clients = clientService.findAllClients();
+        return ResponseEntity.ok().body(clients);
     }
 }
