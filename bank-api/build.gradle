@@ -49,6 +49,9 @@ dependencies {
 			'jakarta.persistence:jakarta.persistence-api:3.1.0'
 	)
 
+	//Report
+	implementation 'org.apache.pdfbox:pdfbox:2.0.30'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

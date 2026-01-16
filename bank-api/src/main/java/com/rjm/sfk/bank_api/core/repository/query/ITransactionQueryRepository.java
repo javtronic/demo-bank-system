@@ -20,4 +20,5 @@ public interface ITransactionQueryRepository {
      */
     List<TransactionDetailVO> findTransactionsByAccountAndRange(String accountCode,
                                                                 Date startDate, Date endDate);
+
 }

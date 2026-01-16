@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Account controller.
+ *
+ * @author javtronic
+ */
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class AccountController {

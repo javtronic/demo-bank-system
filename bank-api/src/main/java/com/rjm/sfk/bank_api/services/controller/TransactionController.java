@@ -20,6 +20,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Transaction controller.
+ *
+ * @author javtronic
+ */
 @RestController
 @RequestMapping("/api/v1/transactions")
 public class TransactionController {
