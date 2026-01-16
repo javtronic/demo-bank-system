@@ -42,6 +42,7 @@ CREATE TABLE SBATACCOUNT (
 	ACCOUNT_NUMBER 		VARCHAR(20) 			not null 	unique,
     ACCOUNT_TYPE       	VARCHAR(20) 			not null,
     INITIAL_BALANCE     NUMERIC(10,2) 			not null,
+	CURRENT_BALANCE     NUMERIC(10,2) 			not null,
     ACCOUNT_STATUS       BOOLEAN 				not null,
     STATUS               BOOLEAN                 not null,
 	CREATED_DATE         TIMESTAMP            not null,
