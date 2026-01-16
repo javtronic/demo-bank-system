@@ -1,0 +1,26 @@
+<h2>Clientes</h2>
+
+<button (click)="goToCreate()">Nuevo Cliente</button>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th>Identificación</th>
+    <th>Telefono</th>
+    <th>Direccion</th>
+    <th>Estado</th>
+    <th>Acciones</th>
+  </tr>
+
+  <tr *ngFor="let c of clients">
+    <td>{{ c.person.name }}</td>
+    <td>{{ c.person.identification }}</td>
+    <td>{{ c.person.phoneNumber }}</td>
+    <td>{{ c.person.address }}</td>
+    <td>{{ c.clientStatus ? 'Activo' : 'Inactivo' }}</td>
+    <td>
+        <button (click)="edit(c.clientCode!)">Editar</button>
+        <button (click)="inactivate(c.clientCode!)">Inactivar</button>
+    </td>
+  </tr>
+</table>

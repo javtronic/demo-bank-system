@@ -1,0 +1,51 @@
+<h2>{{ isEdit ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <fieldset formGroupName="person">
+    <label>
+      Nombre
+      <input formControlName="name" />
+    </label>
+
+    <label>
+      Género
+      <select formControlName="gender">
+        <option value="">Seleccione</option>
+        <option value="MASCULINO">Masculino</option>
+        <option value="FEMENINO">Femenino</option>
+      </select>
+    </label>
+
+    <label>
+      Edad
+      <input type="number" formControlName="age" />
+    </label>
+
+    <label>
+      Identificación
+      <input formControlName="identification" />
+    </label>
+
+    <label>
+      Teléfono
+      <input formControlName="phoneNumber" />
+    </label>
+
+    <label>
+      Dirección
+      <input formControlName="address" />
+    </label>
+  </fieldset>
+
+  <label>
+    Contraseña
+    <input type="password" formControlName="password" />
+  </label>
+
+  <br />
+
+<button type="submit">
+  {{ isEdit ? 'Actualizar' : 'Guardar' }}
+</button>
+  <button type="button" (click)="cancel()">Cancelar</button>
+</form>
