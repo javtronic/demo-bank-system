@@ -2,9 +2,9 @@ package com.rjm.sfk.bank_api.services.controller;
 
 import com.rjm.sfk.bank_api.core.service.AccountService;
 import com.rjm.sfk.bank_api.vo.AccountVO;
+import com.rjm.sfk.bank_api.vo.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +35,13 @@ public class AccountController {
      * @return a ResponseEntity with OK status
      */
     @PostMapping("/create")
-    public ResponseEntity<Object> createAccount(@RequestBody AccountVO accountVO) {
+    public ResponseEntity<ApiResponse<Object>> createAccount(@RequestBody AccountVO accountVO) {
         accountService.createAccount(accountVO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Cuenta creada correctamente",
+                        null)
+        );
     }
 
     /**
@@ -46,10 +50,14 @@ public class AccountController {
      * @param accountCode the account code
      * @return a ResponseEntity with OK status
      */
-    @GetMapping("/inactive")
-    public ResponseEntity<Object> inactiveAccount(@RequestParam("accountCode") String accountCode) {
-        accountService.inactiveAccount(accountCode);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/changeStatus")
+    public ResponseEntity<ApiResponse<Object>> changeStatus(@RequestParam("accountCode") String accountCode) {
+        accountService.changeStatus(accountCode);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Cambio de estado exitoso",
+                        null)
+        );
     }
 
     /**
@@ -58,7 +66,11 @@ public class AccountController {
      * @return a ResponseEntity with OK status and a list of account VO objects as the body
      */
     @GetMapping("/findAll")
-    public ResponseEntity<List<AccountVO>> findAllAccounts() {
-        return ResponseEntity.ok().body(accountService.findAllAccounts());
+    public ResponseEntity<ApiResponse<List<AccountVO>>> findAllAccounts() {
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Listado de cuentas",
+                        accountService.findAllAccounts())
+        );
     }
 }

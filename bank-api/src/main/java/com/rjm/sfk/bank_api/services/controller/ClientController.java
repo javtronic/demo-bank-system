@@ -2,9 +2,9 @@ package com.rjm.sfk.bank_api.services.controller;
 
 import com.rjm.sfk.bank_api.core.service.ClientService;
 import com.rjm.sfk.bank_api.vo.ClientVO;
+import com.rjm.sfk.bank_api.vo.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,24 +32,32 @@ public class ClientController {
      * Creates a new client from the given client VO.
      *
      * @param clientVO the client VO
-     * @return a ResponseEntity with OK status and no body
+     * @return a ResponseEntity with OK status
      */
     @PostMapping("/create")
-    public ResponseEntity<Object> createClient(@RequestBody ClientVO clientVO) {
+    public ResponseEntity<ApiResponse<Object>> createClient(@RequestBody ClientVO clientVO) {
         clientService.createClient(clientVO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Cliente creado correctamente",
+                        null)
+        );
     }
 
     /**
      * Updates the client with the given client VO.
      *
      * @param clientVO the client VO
-     * @return a ResponseEntity with OK status and no body
+     * @return a ResponseEntity with OK status
      */
     @PostMapping("/update")
-    public ResponseEntity<Object> updateClient(@RequestBody ClientVO clientVO) {
+    public ResponseEntity<ApiResponse<Object>> updateClient(@RequestBody ClientVO clientVO) {
         clientService.updateClient(clientVO);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Cliente actualizado correctamente",
+                        null)
+        );
     }
 
     /**
@@ -59,21 +67,31 @@ public class ClientController {
      * @return a ResponseEntity with OK status and the client VO as the body
      */
     @GetMapping("/findByCode")
-    public ResponseEntity<Object> findClientByCode(@RequestParam("clientCode") String clientCode) {
+    public ResponseEntity<ApiResponse<Object>> findClientByCode(
+            @RequestParam("clientCode") String clientCode) {
         ClientVO clientVO = clientService.findClientByCode(clientCode);
-        return ResponseEntity.ok().body(clientVO);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Cliente encontrado",
+                        clientVO)
+        );
     }
 
     /**
      * Sets the client status to false for the given client code.
      *
      * @param clientCode the client code
-     * @return a ResponseEntity with OK status and no body
+     * @return a ResponseEntity with OK status and
      */
-    @GetMapping("/inactive")
-    public ResponseEntity<Object> inactiveClient(@RequestParam("clientCode") String clientCode) {
-        clientService.inactiveClient(clientCode);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/changeStatus")
+    public ResponseEntity<ApiResponse<Object>> changeStatus(
+            @RequestParam("clientCode") String clientCode) {
+        clientService.changeStatus(clientCode);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Cambio de estado exitoso",
+                        null)
+        );
     }
 
     /**
@@ -82,8 +100,12 @@ public class ClientController {
      * @return a ResponseEntity with OK status and a list of client VO objects as the body
      */
     @GetMapping("/findAll")
-    public ResponseEntity<List<ClientVO>> findAll() {
+    public ResponseEntity<ApiResponse<Object>> findAll() {
         List<ClientVO> clients = clientService.findAllClients();
-        return ResponseEntity.ok().body(clients);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Listado de clientes",
+                        clients)
+        );
     }
 }

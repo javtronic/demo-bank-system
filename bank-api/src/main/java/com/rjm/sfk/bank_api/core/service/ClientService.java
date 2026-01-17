@@ -69,7 +69,7 @@ public class ClientService {
         }
 
         ClientEntity client = clientRepository.findById(clientVO.getClientCode())
-                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
 
         client.setClientStatus(clientVO.getClientStatus());
         client.setPassword(clientVO.getPassword());
@@ -101,11 +101,11 @@ public class ClientService {
      * @param clientCode the client code
      */
     @Transactional
-    public void inactiveClient(String clientCode) {
+    public void changeStatus(String clientCode) {
         ClientEntity client = clientRepository.findById(clientCode)
                 .orElse(new ClientEntity());
 
-        client.setClientStatus(false);
+        client.setClientStatus(!client.getClientStatus());
         client.setLastModifiedDate(new Date());
         client.setLastModifiedByUser("SYSTEM");
         client.setUpdatedFromIp("127.0.0.1");

@@ -2,6 +2,7 @@ package com.rjm.sfk.bank_api.core.service;
 
 import com.rjm.sfk.bank_api.client.entity.AccountEntity;
 import com.rjm.sfk.bank_api.client.entity.ClientEntity;
+import com.rjm.sfk.bank_api.client.exception.BusinessException;
 import com.rjm.sfk.bank_api.core.repository.IAccountRepository;
 import com.rjm.sfk.bank_api.core.repository.IClientRepository;
 import com.rjm.sfk.bank_api.core.repository.query.IAccountQueryRepository;
@@ -49,7 +50,7 @@ public class AccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Client not found"));
 
         if (accountRepository.existsByAccountNumber(accountVO.getAccountNumber())) {
-            throw new IllegalStateException("Account number already exists");
+            throw new BusinessException("El número de cuenta ya existe");
         }
 
         AccountEntity account = new AccountEntity();
@@ -71,11 +72,11 @@ public class AccountService {
      * @throws EntityNotFoundException if the account is not found
      */
     @Transactional
-    public void inactiveAccount(String accountCode) {
+    public void changeStatus(String accountCode) {
         AccountEntity account = accountRepository.findById(accountCode)
                 .orElseThrow(() -> new EntityNotFoundException("Account not found"));
 
-        account.setAccountStatus(false);
+        account.setAccountStatus(!account.getAccountStatus());
         account.setLastModifiedDate(new Date());
         account.setLastModifiedByUser("SYSTEM");
         account.setUpdatedFromIp("127.0.0.1");

@@ -3,13 +3,13 @@ package com.rjm.sfk.bank_api.core.service;
 import com.rjm.sfk.bank_api.client.entity.AccountEntity;
 import com.rjm.sfk.bank_api.client.entity.TransactionEntity;
 import com.rjm.sfk.bank_api.client.enums.TransactionType;
+import com.rjm.sfk.bank_api.client.exception.BusinessException;
 import com.rjm.sfk.bank_api.core.repository.IAccountRepository;
 import com.rjm.sfk.bank_api.core.repository.ITransactionRepository;
 import com.rjm.sfk.bank_api.core.repository.query.ITransactionQueryRepository;
-import com.rjm.sfk.bank_api.core.repository.query.TransactionQueryRepository;
 import com.rjm.sfk.bank_api.vo.TransactionDetailVO;
 import com.rjm.sfk.bank_api.vo.TransactionVO;
-import org.springframework.beans.BeanUtils;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class TransactionService {
     @Transactional
     public void registerTransaction(TransactionVO transactionVO) {
         AccountEntity account = accountRepository.findById(transactionVO.getAccountCode())
-                .orElseThrow(() -> new RuntimeException("Cuenta no existe"));
+                .orElseThrow(() -> new EntityNotFoundException("Cuenta no existe"));
 
         BigDecimal newBalance = calculateBalance(account, transactionVO.getTransactionType(),
                 transactionVO.getAmount());
@@ -84,16 +84,16 @@ public class TransactionService {
      * Calculates the new balance of an account after a transaction.
      *
      * @param account the account to update
-     * @param type the type of transaction (debit or credit)
-     * @param amount the amount of the transaction
+     * @param type    the type of transaction (debit or credit)
+     * @param amount  the amount of the transaction
      * @return the new balance of the account
      * @throws IllegalStateException if the account does not have enough balance for a debit transaction
      */
     private BigDecimal calculateBalance(AccountEntity account, TransactionType type,
                                         BigDecimal amount) {
-        if(type == TransactionType.DEBITO) {
-            if(account.getCurrentBalance().compareTo(amount) < 0){
-                throw new IllegalStateException("Saldo insuficiente");
+        if (type == TransactionType.DEBITO) {
+            if (account.getCurrentBalance().compareTo(amount) < 0) {
+                throw new BusinessException("Saldo no disponible o insuficiente");
             }
             return account.getCurrentBalance().subtract(amount);
         }

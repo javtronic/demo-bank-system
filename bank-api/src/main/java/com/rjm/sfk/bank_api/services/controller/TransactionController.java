@@ -3,10 +3,10 @@ package com.rjm.sfk.bank_api.services.controller;
 import com.rjm.sfk.bank_api.core.service.TransactionService;
 import com.rjm.sfk.bank_api.vo.TransactionDetailVO;
 import com.rjm.sfk.bank_api.vo.TransactionVO;
+import com.rjm.sfk.bank_api.vo.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,9 +40,13 @@ public class TransactionController {
      * @return a ResponseEntity with OK status
      */
     @PostMapping("/register")
-    public ResponseEntity<Object> registerTransaction(@RequestBody TransactionVO transactionVO) {
+    public ResponseEntity<ApiResponse<Object>> registerTransaction(@RequestBody TransactionVO transactionVO) {
         transactionService.registerTransaction(transactionVO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Transacción registrada correctamente",
+                        null)
+        );
     }
 
     /**
@@ -54,10 +58,10 @@ public class TransactionController {
      * @return a list of transaction detail VO objects
      */
     @GetMapping("/{accountCode}/movements")
-    public ResponseEntity<List<TransactionDetailVO>> transactionsByAccountAndRange(
+    public ResponseEntity<ApiResponse<List<TransactionDetailVO>>> transactionsByAccountAndRange(
             @PathVariable String accountCode,
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam("endDate")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
         List<TransactionDetailVO> response = transactionService.findTransactionsByAccountAndRange(
                 accountCode,
@@ -65,6 +69,10 @@ public class TransactionController {
                 Date.valueOf(endDate)
         );
 
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true,
+                        "Listado de transacciones",
+                        response)
+        );
     }
 }
