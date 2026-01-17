@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Account controller.
  *
@@ -48,5 +50,15 @@ public class AccountController {
     public ResponseEntity<Object> inactiveAccount(@RequestParam("accountCode") String accountCode) {
         accountService.inactiveAccount(accountCode);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Finds all accounts.
+     *
+     * @return a ResponseEntity with OK status and a list of account VO objects as the body
+     */
+    @GetMapping("/findAll")
+    public ResponseEntity<List<AccountVO>> findAllAccounts() {
+        return ResponseEntity.ok().body(accountService.findAllAccounts());
     }
 }

@@ -4,6 +4,7 @@ import com.rjm.sfk.bank_api.client.entity.AccountEntity;
 import com.rjm.sfk.bank_api.client.entity.ClientEntity;
 import com.rjm.sfk.bank_api.core.repository.IAccountRepository;
 import com.rjm.sfk.bank_api.core.repository.IClientRepository;
+import com.rjm.sfk.bank_api.core.repository.query.IAccountQueryRepository;
 import com.rjm.sfk.bank_api.vo.AccountVO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -31,6 +33,9 @@ public class AccountService {
 
     @Autowired
     private IClientRepository clientRepository;
+
+    @Autowired
+    private IAccountQueryRepository accountQueryRepository;
 
     /**
      * Creates a new account for the given client.
@@ -74,5 +79,14 @@ public class AccountService {
         account.setLastModifiedDate(new Date());
         account.setLastModifiedByUser("SYSTEM");
         account.setUpdatedFromIp("127.0.0.1");
+    }
+
+    /**
+     * Finds all accounts.
+     *
+     * @return a list of account VO objects
+     */
+    public List<AccountVO> findAllAccounts() {
+        return accountQueryRepository.findAllAccounts();
     }
 }

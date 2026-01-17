@@ -18,6 +18,13 @@ public interface IClientQueryRepository {
     ClientVO findClientByCode(String clientCode);
 
     /**
+     * Finds a client by its identification.
+     *
+     * @param identification the client identification
+     * @return the client VO or null if not found
+     */
+    ClientVO findClientByIdentification(String identification);
+    /**
      * Finds all clients.
      *
      * @return a list of client VO objects

@@ -26,4 +26,6 @@ public class AccountVO {
     private BigDecimal initialBalance;
     private BigDecimal currentBalance;
     private Boolean accountStatus;
+
+    private ClientVO client;
 }

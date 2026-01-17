@@ -1,11 +1,9 @@
 package com.rjm.sfk.bank_api.core.service;
 
 import com.rjm.sfk.bank_api.client.entity.AccountEntity;
-import com.rjm.sfk.bank_api.client.entity.ClientEntity;
 import com.rjm.sfk.bank_api.client.enums.TransactionType;
 import com.rjm.sfk.bank_api.client.utils.PDFUtils;
 import com.rjm.sfk.bank_api.core.repository.IAccountRepository;
-import com.rjm.sfk.bank_api.core.repository.IClientRepository;
 import com.rjm.sfk.bank_api.core.repository.query.IClientQueryRepository;
 import com.rjm.sfk.bank_api.vo.ClientVO;
 import com.rjm.sfk.bank_api.vo.TransactionDetailVO;
@@ -45,19 +43,19 @@ public class ReportService {
     /**
      * Generates a report for a given client code and date range.
      *
-     * @param clientCode the client code
+     * @param identification the Identification
      * @param startDate the start date of the range
      * @param endDate the end date of the range
      * @return a report VO object with the client code, client name, and a list of account report VO objects
      * @throws EntityNotFoundException if the client code is not found
      */
-    public ReportVO generateReport(String clientCode, Date startDate, Date endDate) {
-        ClientVO client = clientQueryRepository.findClientByCode(clientCode);
+    public ReportVO generateReport(String identification, Date startDate, Date endDate) {
+        ClientVO client = clientQueryRepository.findClientByIdentification(identification);
         if(client == null) {
             throw new EntityNotFoundException("Cliente no Encontrado");
         }
 
-        List<AccountEntity> accountsEntities = accountRepository.findByClient_ClientCode(clientCode);
+        List<AccountEntity> accountsEntities = accountRepository.findByClient_ClientCode(client.getClientCode());
 
         List<AccountReportVO> accountReportVOS = new ArrayList<>();
 
@@ -107,14 +105,14 @@ public class ReportService {
     /**
      * Generates a PDF report for a given client code and date range.
      *
-     * @param clientCode the client code
+     * @param identification the identification
      * @param startDate the start date of the range
      * @param endDate the end date of the range
      * @return a report VO object with the client code, client name, a list of account report VO objects, and the PDF report as a base64 string
      * @throws Exception if an error occurs generating the PDF
      */
-    public String generatePDF(String clientCode, Date startDate, Date endDate) throws Exception {
-        ReportVO report = generateReport(clientCode, startDate, endDate);
+    public String generatePDF(String identification, Date startDate, Date endDate) throws Exception {
+        ReportVO report = generateReport(identification, startDate, endDate);
         return PDFUtils.generatePdfBase64(report);
     }
 }

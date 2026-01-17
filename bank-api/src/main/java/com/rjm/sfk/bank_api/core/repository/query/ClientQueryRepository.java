@@ -60,6 +60,36 @@ public class ClientQueryRepository implements IClientQueryRepository {
                 .fetchOne();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ClientVO findClientByIdentification(String identification) {
+        return queryFactory
+                .select(Projections.bean(ClientVO.class,
+                        clientEntity.clientCode,
+                        clientEntity.password,
+                        clientEntity.clientStatus,
+                        Projections.bean(PersonVO.class,
+                                personEntity.personCode,
+                                personEntity.name,
+                                personEntity.gender,
+                                personEntity.age,
+                                personEntity.identification,
+                                personEntity.phoneNumber,
+                                personEntity.address,
+                                personEntity.status
+                        ).as("person")
+                ))
+                .from(clientEntity)
+                .innerJoin(clientEntity.person, personEntity)
+                .where(personEntity.identification.eq(identification))
+                .fetchOne();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ClientVO> findAllClients() {
         return queryFactory

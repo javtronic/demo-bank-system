@@ -26,18 +26,18 @@ public class ReportController {
     /**
      * Generates a report for a given client code and date range.
      *
-     * @param clientCode the client code
+     * @param identification the Identification
      * @param startDate the start date of the range
      * @param endDate the end date of the range
      * @return a report VO object with the client code, client name, and a list of account report VO objects
      */
-    @GetMapping("/{clientCode}")
+    @GetMapping("/{identification}")
     public ResponseEntity<ReportVO> reportsByClientAndRange(
-            @PathVariable String clientCode,
+            @PathVariable String identification,
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         ReportVO response = reportService.generateReport(
-                clientCode,
+                identification,
                 Date.valueOf(startDate),
                 Date.valueOf(endDate)
         );
@@ -45,14 +45,24 @@ public class ReportController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/{clientCode}/pdf")
+    /**
+     * Generates a PDF report for a given client code and date range.
+     *
+     * @param identification the client code
+     * @param startDate the start date of the range
+     * @param endDate the end date of the range
+     * @return a ResponseEntity with OK status and the PDF report as a Base64 string, or
+     *         NOT_FOUND status if the client is not found, or
+     *         INTERNAL_SERVER_ERROR status if an error occurs generating the PDF
+     */
+    @GetMapping("/{identification}/pdf")
     public ResponseEntity<String> reportsByClientAndRangePdf(
-            @PathVariable String clientCode,
+            @PathVariable String identification,
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         try {
             String response = reportService.generatePDF(
-                    clientCode,
+                    identification,
                     Date.valueOf(startDate),
                     Date.valueOf(endDate)
             );
