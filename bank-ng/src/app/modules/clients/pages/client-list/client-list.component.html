@@ -26,10 +26,11 @@
     <td>{{ client.person.identification }}</td>
     <td>{{ client.person.phoneNumber }}</td>
     <td>{{ client.person.address }}</td>
-    <td>{{ client.clientStatus ? "Activo" : "Inactivo" }}</td>
+    <td>{{ client.clientStatus ? "ACTIVO" : "INACTIVO" }}</td>
     <td>
       <button (click)="edit(client.clientCode!)">Editar</button>
-      <button (click)="inactivate(client.clientCode!)">Inactivar</button>
+      <button (click)="changeStatus(client.clientCode!)">
+        {{ client.clientStatus ? "Inactivar" : "Activar" }}</button>
     </td>
   </tr>
 </table>

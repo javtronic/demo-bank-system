@@ -32,13 +32,8 @@
       <td>{{ acc.client.person.name }}</td>
       <td>{{ acc.client.person.identification }}</td>
       <td>
-        <button (click)="viewTransactions(acc.accountCode!)">Movimientos</button>
-
-        <button
-          (click)="inactivate(acc.accountCode!)"
-          [disabled]="!acc.accountStatus"
-        >
-          Inactivar
+        <button (click)="changeStatus(acc.accountCode!)">
+          {{ acc.accountStatus ? "Inactivar" : "Activar" }}
         </button>
       </td>
     </tr>

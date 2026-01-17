@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../../core/account.service';
 import { ClientService } from '../../../../core/client.service';
@@ -14,8 +19,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './account-form.component.css',
 })
 export class AccountFormComponent implements OnInit {
-
-  form!: FormGroup
+  form!: FormGroup;
   clients: Client[] = [];
 
   accountTypes = ['AHORRO', 'CORRIENTE'];
@@ -24,7 +28,7 @@ export class AccountFormComponent implements OnInit {
     private fb: FormBuilder,
     private accountService: AccountService,
     private clientService: ClientService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +50,14 @@ export class AccountFormComponent implements OnInit {
   save() {
     if (this.form.invalid) return;
 
-    this.accountService.create(this.form.value).subscribe(() => {
-      this.router.navigate(['/accounts']);
+    this.accountService.create(this.form.value).subscribe({
+      next: (response) => {
+        alert(response);
+        this.router.navigate(['/accounts']);
+      },
+      error: (message) => {
+        alert(message);
+      },
     });
   }
 }

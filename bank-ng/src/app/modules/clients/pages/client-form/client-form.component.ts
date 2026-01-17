@@ -12,16 +12,16 @@ import { ClientService } from '../../../../core/client.service';
   styleUrl: './client-form.component.css',
 })
 export class ClientFormComponent {
-
   isEdit = false;
   clientCode?: string;
   constructor(
     private fb: FormBuilder,
     private clientService: ClientService,
     private router: Router,
-     private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
-    this.clientCode = this.route.snapshot.paramMap.get('clientCode') ?? undefined;
+    this.clientCode =
+      this.route.snapshot.paramMap.get('clientCode') ?? undefined;
     this.isEdit = !!this.clientCode;
 
     if (this.isEdit) {
@@ -29,27 +29,26 @@ export class ClientFormComponent {
     }
   }
 
-form = this.fb.group({
-  clientCode: [''],
-  password: ['', Validators.required],
-  clientStatus: [true],
-  person: this.fb.group({
-    personCode: [''],
-    name: ['', Validators.required],
-    gender: ['', Validators.required],
-    age: [null as number | null, [Validators.required, Validators.min(1)]],
-    identification: ['', Validators.required],
-    phoneNumber: ['', Validators.required],
-    address: [''],
-    status: [true]
-  })
-});
+  form = this.fb.group({
+    clientCode: [''],
+    password: ['', Validators.required],
+    clientStatus: [true],
+    person: this.fb.group({
+      personCode: [''],
+      name: ['', Validators.required],
+      gender: ['', Validators.required],
+      age: [null as number | null, [Validators.required, Validators.min(1)]],
+      identification: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      address: [''],
+      status: [true],
+    }),
+  });
 
-    loadClient() {
-    this.clientService.findByCode(this.clientCode!)
-      .subscribe(client => {
-        this.form.patchValue(client);
-      });
+  loadClient() {
+    this.clientService.findByCode(this.clientCode!).subscribe((client) => {
+      this.form.patchValue(client);
+    });
   }
 
   save() {
@@ -58,15 +57,32 @@ form = this.fb.group({
       return;
     }
 
-    if(this.isEdit) {
-      this.clientService.update(this.form.value as any).subscribe(() => {
+    if (this.isEdit) {
+      this.clientService.update(this.form.value as any).subscribe({
+      next: (response) => {
+        alert(response);
         this.router.navigate(['/clients']);
-      });
+      },
+      error: (message) => {
+        alert(message);
+      },
+    });
       return;
     }
 
-    this.clientService.create(this.form.value as any).subscribe(() => {
-      this.router.navigate(['/clients']);
+    const payload = structuredClone(this.form.value);
+
+    delete payload.clientCode;
+    delete payload.person?.personCode;
+
+    this.clientService.create(payload as any).subscribe({
+      next: (response) => {
+        alert(response);
+        this.router.navigate(['/clients']);
+      },
+      error: (message) => {
+        alert(message);
+      },
     });
   }
 

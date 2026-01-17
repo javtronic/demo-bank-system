@@ -48,9 +48,15 @@ export class ClientListComponent implements OnInit {
   );
   }
 
-  inactivate(clientCode: string) {
-    this.clientService.inactivate(clientCode).subscribe(() => {
-      this.loadClients();
+  changeStatus(clientCode: string) {
+    this.clientService.changeStatus(clientCode).subscribe({
+      next: (response) => {
+        alert(response);
+         this.loadClients();
+      },
+      error: (message) => {
+        alert(message);
+      },
     });
   }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { ReportResponse } from '../models/reportResponse.model';
+import { ApiResponse } from '../models/api-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
@@ -16,9 +17,12 @@ export class ReportService {
     startDate: string,
     endDate: string
   ): Observable<ReportResponse> {
-    return this.http.get<ReportResponse>(
+    return this.http.get<ApiResponse<ReportResponse>>(
       `${this.api}/${identification}?startDate=${startDate}&endDate=${endDate}`
-    );
+    ).pipe(
+          map((response) => response.data),
+          catchError((error) => this.handleError(error)),
+        );
   }
 
   getPdfBase64(
@@ -26,9 +30,21 @@ export class ReportService {
     startDate: string,
     endDate: string
   ): Observable<string> {
-    return this.http.get(
-      `${this.api}/${identification}/pdf?startDate=${startDate}&endDate=${endDate}`,
-      { responseType: 'text' }
-    );
+    return this.http.get<ApiResponse<string>>(
+      `${this.api}/${identification}/pdf?startDate=${startDate}&endDate=${endDate}`
+    ).pipe(
+      map((response) => response.data),
+      catchError((error) => this.handleError(error)),
+    );;
   }
+
+      private handleError(error: any) {
+        let message = 'Error inesperado';
+    
+        if (error?.error?.message) {
+          message = error.error.message;
+        }
+    
+        return throwError(() => message);
+      }
 }

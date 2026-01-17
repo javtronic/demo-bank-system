@@ -35,13 +35,17 @@ export class AccountListComponent implements OnInit {
       .subscribe(res => this.accounts = res);
   }
 
-  inactivate(accountCode: string) {
-    this.service.inactivate(accountCode)
-      .subscribe(() => this.loadAccounts());
-  }
-
-  viewTransactions(accountCode: string) {
-    this.router.navigate(['/transactions', accountCode]);
+  changeStatus(accountCode: string) {
+    this.service.changeStatus(accountCode)
+      .subscribe({
+      next: (response) => {
+        alert(response);
+         this.loadAccounts();
+      },
+      error: (message) => {
+        alert(message);
+      },
+    });
   }
 
   filteredAccounts(): Account[] {

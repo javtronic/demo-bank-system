@@ -10,6 +10,7 @@ import {
 import { TransactionService } from '../../../../core/transaction.service';
 import { TransactionRequest } from '../../../../models/transaction.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transaction-form',
@@ -26,7 +27,8 @@ export class TransactionFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -51,14 +53,12 @@ export class TransactionFormComponent implements OnInit {
     const transaction: TransactionRequest = this.form.value;
 
     this.transactionService.register(transaction).subscribe({
-      next: () => {
-        alert('Transacción registrada correctamente');
-        this.form.reset();
+      next: (response) => {
+        alert(response);
+        this.router.navigate(['/transactions']);
       },
-      error: (err) => {
-        alert(
-          'Error al registrar transacción: ' + err.error.message || err.message
-        );
+      error: (message) => {
+        alert(message);
       },
     });
   }
