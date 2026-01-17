@@ -1,1 +1,30 @@
-<router-outlet />
+<div class="dashboard-container">
+
+  <aside class="sidebar">
+    <div class="head">
+      <span>MENÚ</span>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a routerLink="/clients" routerLinkActive="active">Clientes</a></li>
+        <li><a routerLink="/accounts" routerLinkActive="active">Cuentas</a></li>
+        <li><a routerLink="/transactions" routerLinkActive="active">Movimientos</a></li>
+        <li><a routerLink="/reports" routerLinkActive="active">Reportes</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="header">
+      <span class="title">Sistema Bancario</span>
+    </header>
+
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+
+  </main>
+
+</div>

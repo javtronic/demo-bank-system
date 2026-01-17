@@ -1,0 +1,46 @@
+<h2>Cuentas</h2>
+
+<button (click)="createAccount()">➕ Nueva cuenta</button>
+
+<input
+  type="text"
+  placeholder="Buscar por número, cliente o identificación"
+  [(ngModel)]="searchText"
+/>
+
+<table border="1" width="100%">
+  <thead>
+    <tr>
+      <th>N° Cuenta</th>
+      <th>Tipo</th>
+      <th>Saldo Inicial</th>
+      <th>Estado</th>
+      <th>Cliente</th>
+      <th>Identificación</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let acc of filteredAccounts()">
+      <td>{{ acc.accountNumber }}</td>
+      <td>{{ acc.accountType }}</td>
+      <td>{{ acc.initialBalance }}</td>
+      <td>
+        {{ acc.accountStatus ? "ACTIVA" : "INACTIVA" }}
+      </td>
+      <td>{{ acc.client.person.name }}</td>
+      <td>{{ acc.client.person.identification }}</td>
+      <td>
+        <button (click)="viewTransactions(acc.accountCode!)">Movimientos</button>
+
+        <button
+          (click)="inactivate(acc.accountCode!)"
+          [disabled]="!acc.accountStatus"
+        >
+          Inactivar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

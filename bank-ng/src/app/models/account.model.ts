@@ -1,3 +1,5 @@
+import { Client } from "./client.model";
+
 export interface Account {
   accountCode?: string;
   clientCode: string;
@@ -5,4 +7,6 @@ export interface Account {
   accountType: 'AHORRO' | 'CORRIENTE';
   initialBalance: number;
   accountStatus: boolean;
+
+  client: Client;
 }

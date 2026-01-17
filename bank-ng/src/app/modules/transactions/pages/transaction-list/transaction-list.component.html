@@ -1,0 +1,50 @@
+<h2>Movimientos</h2>
+
+<button (click)="goToCreate()">Nueva Transacción</button>
+
+<div class="filter-box">
+
+  <select [(ngModel)]="accountCode">
+    <option value="">Seleccione cuenta</option>
+    <option *ngFor="let acc of accounts"
+            [value]="acc.accountCode">
+      {{ acc.client.person.name }} - {{ acc.accountNumber }}
+    </option>
+  </select>
+
+  <input type="date" [(ngModel)]="startDate">
+  <input type="date" [(ngModel)]="endDate">
+
+  <button (click)="search()">Buscar</button>
+
+</div>
+
+<table border="1" width="100%" class="table" *ngIf="transactions.length > 0">
+
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Cliente</th>
+      <th># Cuenta</th>
+      <th>Tipo</th>
+      <th>Valor</th>
+      <th>Saldo</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let tx of transactions">
+      <td>{{ tx.transactionDate | date:'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ tx.name }}</td>
+      <td>{{ tx.accountNumber }}</td>
+      <td>
+        <span [ngClass]="tx.transactionType === 'CREDITO' ? 'credit' : 'debit'">
+          {{ tx.transactionType }}
+        </span>
+      </td>
+      <td>{{ tx.amount | number:'1.2-2' }}</td>
+      <td>{{ tx.balance | number:'1.2-2' }}</td>
+    </tr>
+  </tbody>
+
+</table>

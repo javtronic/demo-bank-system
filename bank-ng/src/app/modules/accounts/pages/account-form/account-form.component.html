@@ -1,0 +1,48 @@
+<h2>Crear Cuenta</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+
+  <!-- CLIENTE -->
+  <label>Cliente</label>
+  <select formControlName="clientCode">
+    <option value="">Seleccione cliente</option>
+    <option *ngFor="let c of clients" [value]="c.clientCode">
+      {{ c.person.name }} - {{ c.person.identification }}
+    </option>
+  </select>
+
+  <br><br>
+
+  <!-- NUMERO -->
+  <input
+    type="text"
+    placeholder="Número de cuenta"
+    formControlName="accountNumber"
+  />
+
+  <br><br>
+
+  <!-- TIPO -->
+  <select formControlName="accountType">
+    <option value="">Tipo de cuenta</option>
+    <option *ngFor="let t of accountTypes" [value]="t">
+      {{ t }}
+    </option>
+  </select>
+
+  <br><br>
+
+  <!-- SALDO -->
+  <input
+    type="number"
+    formControlName="initialBalance"
+    placeholder="Saldo inicial"
+  />
+
+  <br><br>
+
+  <button type="submit" [disabled]="form.invalid">
+    Guardar
+  </button>
+
+</form>

@@ -1,0 +1,32 @@
+<h2>Registrar Transacción</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <!-- Seleccionar cuenta -->
+  <label>Cuenta</label>
+  <select formControlName="accountCode">
+    <option value="">Seleccione cuenta</option>
+    <option *ngFor="let acc of accounts" [value]="acc.accountCode">
+      {{ acc.client.person.name }} - {{ acc.accountNumber }}
+    </option>
+  </select>
+
+  <br><br>
+
+  <!-- Tipo de movimiento -->
+  <label>Tipo</label>
+  <select formControlName="transactionType">
+    <option value="">Seleccione tipo</option>
+    <option *ngFor="let t of transactionTypes" [value]="t">{{ t }}</option>
+  </select>
+
+  <br><br>
+
+  <!-- Monto -->
+  <label>Monto</label>
+  <input type="number" formControlName="amount" placeholder="Ingrese monto">
+
+  <br><br>
+
+  <button type="submit" [disabled]="form.invalid">Registrar</button>
+</form>

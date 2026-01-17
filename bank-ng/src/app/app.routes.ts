@@ -1,9 +1,13 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    { path: 'clients', loadChildren: () => import('./modules/clients/clients.routes') },
-  //  { path: 'accounts', loadChildren: () => import('./features/accounts/accounts.routes') },
-  //  { path: 'transactions', loadChildren: () => import('./features/transactions/transactions.routes') },
-  //  { path: 'reports', loadChildren: () => import('./features/reports/reports.routes') },
-    { path: '', redirectTo: 'clients', pathMatch: 'full' }
+    { path: '', redirectTo: 'clients', pathMatch: 'full' },
+    { path: 'clients', loadChildren: 
+        () => import('./modules/clients/clients.routes').then(m => m.CLIENTS_ROUTES) },
+    { path: 'accounts', loadChildren: 
+        () => import('./modules/accounts/accounts.routes').then(m => m.ACCOUNTS_ROUTES) },
+   { path: 'transactions', loadChildren: 
+        () => import('./modules/transactions/transactions.routes').then(m => m.TRANSACTIONS_ROUTES) },
+   { path: 'reports', loadChildren: 
+        () => import('./modules/reports/reports.routes').then(m => m.REPORTS_ROUTES) }
 ];

@@ -1,0 +1,57 @@
+<h2>Estado de Cuenta</h2>
+
+<div class="filters">
+  <input type="text"
+         placeholder="Identificación del cliente"
+         [(ngModel)]="identification">
+
+  <input type="date" [(ngModel)]="startDate">
+  <input type="date" [(ngModel)]="endDate">
+
+  <button (click)="search()">Buscar</button>
+  <button (click)="downloadPdf()" [disabled]="!report">
+    Descargar PDF
+  </button>
+</div>
+
+<hr>
+
+<div *ngIf="report">
+
+  <h3>Cliente: {{ report.clientName }}</h3>
+
+  <div *ngFor="let acc of report.accountReportVOS" class="account-box">
+
+    <h4>
+      Cuenta {{ acc.accountNumber }} - {{ acc.accountType }}
+    </h4>
+
+    <p>
+      Saldo inicial: {{ acc.initialBalance }} |
+      Créditos: {{ acc.totalCredits }} |
+      Débitos: {{ acc.totalDebits }}
+    </p>
+
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Tipo</th>
+          <th>Monto</th>
+          <th>Saldo</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let tx of acc.transactions">
+          <td>{{ tx.transactionDate | date:'short' }}</td>
+          <td>{{ tx.transactionType }}</td>
+          <td>{{ tx.amount }}</td>
+          <td>{{ tx.balance }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
