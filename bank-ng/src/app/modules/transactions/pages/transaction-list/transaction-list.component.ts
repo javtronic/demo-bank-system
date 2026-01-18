@@ -6,6 +6,7 @@ import { Account } from '../../../../models/account.model';
 import { AccountService } from '../../../../core/account.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../../shared/alert.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -26,7 +27,8 @@ export class TransactionListComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class TransactionListComponent implements OnInit {
 
   search() {
     if (!this.accountCode || !this.startDate || !this.endDate) {
-      alert('Debe seleccionar cuenta y rango de fechas');
+       this.alertService.error('Debe seleccionar cuenta y rango de fechas');
       return;
     }
 

@@ -8,8 +8,8 @@
   <input type="date" [(ngModel)]="startDate">
   <input type="date" [(ngModel)]="endDate">
 
-  <button (click)="search()">Buscar</button>
-  <button (click)="downloadPdf()" [disabled]="!report">
+  <button class="btn btn-primary" (click)="search()">Buscar</button>
+  <button class="btn btn-primary" (click)="downloadPdf()" [disabled]="!report">
     Descargar PDF
   </button>
 </div>

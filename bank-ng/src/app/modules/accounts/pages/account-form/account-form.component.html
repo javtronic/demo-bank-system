@@ -41,8 +41,12 @@
 
   <br><br>
 
-  <button type="submit" [disabled]="form.invalid">
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
     Guardar
+  </button>
+
+  <button class="btn btn-secondary" type="button" (click)="cancel()">
+    Cancelar
   </button>
 
 </form>

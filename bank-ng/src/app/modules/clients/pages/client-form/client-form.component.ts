@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../../../core/client.service';
+import { AlertService } from '../../../../shared/alert.service';
 
 @Component({
   selector: 'app-client-form',
@@ -19,6 +20,7 @@ export class ClientFormComponent {
     private clientService: ClientService,
     private router: Router,
     private route: ActivatedRoute,
+    private alertService: AlertService
   ) {
     this.clientCode =
       this.route.snapshot.paramMap.get('clientCode') ?? undefined;
@@ -60,11 +62,11 @@ export class ClientFormComponent {
     if (this.isEdit) {
       this.clientService.update(this.form.value as any).subscribe({
       next: (response) => {
-        alert(response);
+        this.alertService.success(response);
         this.router.navigate(['/clients']);
       },
       error: (message) => {
-        alert(message);
+        this.alertService.error(message);
       },
     });
       return;
@@ -77,11 +79,11 @@ export class ClientFormComponent {
 
     this.clientService.create(payload as any).subscribe({
       next: (response) => {
-        alert(response);
+        this.alertService.success(response);
         this.router.navigate(['/clients']);
       },
       error: (message) => {
-        alert(message);
+       this.alertService.error(message);
       },
     });
   }

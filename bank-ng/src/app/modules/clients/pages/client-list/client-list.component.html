@@ -1,6 +1,6 @@
 <h2>Clientes</h2>
 
-<button (click)="goToCreate()">Nuevo Cliente</button>
+<button class="btn btn-primary" (click)="goToCreate()">Nuevo Cliente</button>
 
 <div class="search-box">
   <input
@@ -28,8 +28,10 @@
     <td>{{ client.person.address }}</td>
     <td>{{ client.clientStatus ? "ACTIVO" : "INACTIVO" }}</td>
     <td>
-      <button (click)="edit(client.clientCode!)">Editar</button>
-      <button (click)="changeStatus(client.clientCode!)">
+      <button class="btn btn-secondary" (click)="edit(client.clientCode!)">Editar</button>
+      <button 
+      [ngClass]="client.clientStatus ? 'btn btn-danger' : 'btn btn-primary'"
+      (click)="changeStatus(client.clientCode!)">
         {{ client.clientStatus ? "Inactivar" : "Activar" }}</button>
     </td>
   </tr>

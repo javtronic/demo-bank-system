@@ -11,6 +11,7 @@ import { TransactionService } from '../../../../core/transaction.service';
 import { TransactionRequest } from '../../../../models/transaction.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../../shared/alert.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -29,6 +30,7 @@ export class TransactionFormComponent implements OnInit {
     private accountService: AccountService,
     private transactionService: TransactionService,
     private router: Router,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -54,12 +56,17 @@ export class TransactionFormComponent implements OnInit {
 
     this.transactionService.register(transaction).subscribe({
       next: (response) => {
-        alert(response);
+        this.alertService.success(response);
         this.router.navigate(['/transactions']);
       },
       error: (message) => {
-        alert(message);
+        this.alertService.error(message);
       },
     });
+  }
+
+  cancel() {
+    this.form.reset();
+    this.router.navigate(['/transactions']);
   }
 }

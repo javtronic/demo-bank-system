@@ -10,6 +10,7 @@ import { AccountService } from '../../../../core/account.service';
 import { ClientService } from '../../../../core/client.service';
 import { Client } from '../../../../models/client.model';
 import { CommonModule } from '@angular/common';
+import { AlertService } from '../../../../shared/alert.service';
 
 @Component({
   selector: 'app-account-form',
@@ -29,6 +30,7 @@ export class AccountFormComponent implements OnInit {
     private accountService: AccountService,
     private clientService: ClientService,
     private router: Router,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -52,12 +54,16 @@ export class AccountFormComponent implements OnInit {
 
     this.accountService.create(this.form.value).subscribe({
       next: (response) => {
-        alert(response);
+        this.alertService.success(response);
         this.router.navigate(['/accounts']);
       },
       error: (message) => {
-        alert(message);
+        this.alertService.error(message);
       },
     });
+  }
+
+  cancel() {
+    this.router.navigate(['/accounts']);
   }
 }

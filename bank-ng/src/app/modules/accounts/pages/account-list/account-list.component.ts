@@ -4,6 +4,7 @@ import { Account } from '../../../../models/account.model';
 import { AccountService } from '../../../../core/account.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AlertService } from '../../../../shared/alert.service';
 
 @Component({
   selector: 'app-account-list',
@@ -19,7 +20,8 @@ export class AccountListComponent implements OnInit {
 
   constructor(
     private service: AccountService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService 
   ) {}
 
   ngOnInit(): void {
@@ -39,11 +41,11 @@ export class AccountListComponent implements OnInit {
     this.service.changeStatus(accountCode)
       .subscribe({
       next: (response) => {
-        alert(response);
+        this.alertService.success(response);
          this.loadAccounts();
       },
       error: (message) => {
-        alert(message);
+        this.alertService.error(message);
       },
     });
   }

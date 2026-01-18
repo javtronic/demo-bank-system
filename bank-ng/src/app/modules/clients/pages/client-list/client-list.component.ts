@@ -4,6 +4,7 @@ import { ClientService } from '../../../../core/client.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AlertService } from '../../../../shared/alert.service';
 
 @Component({
   selector: 'app-client-list',
@@ -17,7 +18,10 @@ export class ClientListComponent implements OnInit {
   filteredClients: Client[] = [];
   searchText: string = '';
 
-  constructor(private clientService: ClientService, private router: Router) {}
+  constructor(private clientService: ClientService, 
+    private router: Router,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.loadClients();
@@ -51,11 +55,11 @@ export class ClientListComponent implements OnInit {
   changeStatus(clientCode: string) {
     this.clientService.changeStatus(clientCode).subscribe({
       next: (response) => {
-        alert(response);
+        this.alertService.success(response);
          this.loadClients();
       },
       error: (message) => {
-        alert(message);
+        this.alertService.error(message);
       },
     });
   }

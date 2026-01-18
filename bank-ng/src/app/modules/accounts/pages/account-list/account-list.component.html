@@ -1,6 +1,6 @@
 <h2>Cuentas</h2>
 
-<button (click)="createAccount()">➕ Nueva cuenta</button>
+<button class="btn btn-primary" (click)="createAccount()">➕ Nueva cuenta</button>
 
 <input
   type="text"
@@ -32,7 +32,8 @@
       <td>{{ acc.client.person.name }}</td>
       <td>{{ acc.client.person.identification }}</td>
       <td>
-        <button (click)="changeStatus(acc.accountCode!)">
+        <button       [ngClass]="acc.accountStatus ? 'btn btn-danger' : 'btn btn-primary'"
+         (click)="changeStatus(acc.accountCode!)">
           {{ acc.accountStatus ? "Inactivar" : "Activar" }}
         </button>
       </td>
