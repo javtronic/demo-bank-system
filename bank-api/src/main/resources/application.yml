@@ -3,12 +3,12 @@ spring:
     name: bank-api
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/sfk_bankdata
-    username: postgres
-    password: root
-#    url: ${SPRING_DATASOURCE_URL}
-#    username: ${SPRING_DATASOURCE_USERNAME}
-#    password: ${SPRING_DATASOURCE_PASSWORD}
+#    url: jdbc:postgresql://localhost:5432/sfk_bankdata
+#    username: postgres
+#    password: root
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
