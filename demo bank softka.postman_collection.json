@@ -1,0 +1,336 @@
+{
+  "info": {
+    "_postman_id": "e8004670-010d-4699-abc6-88ab09c2696e",
+    "name": "demo bank softka",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3036297"
+  },
+  "item": [
+    {
+      "name": "find client by Code",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/clients/findByCode?clientCode=0aea9cd1-33b8-430a-8359-df5ee2e41bcd",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "findByCode"
+          ],
+          "query": [
+            {
+              "key": "clientCode",
+              "value": "0aea9cd1-33b8-430a-8359-df5ee2e41bcd"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create Client",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"password\": \"1245\",\r\n  \"clientStatus\": true,\r\n  \"person\": {\r\n    \"name\": \"Juan Osorio\",\r\n    \"gender\": \"MASCULINO\",\r\n    \"age\": 30,\r\n    \"identification\": \"1004658002\",\r\n    \"phoneNumber\": \"098874587 \",\r\n    \"address\": \"13 junio y Equinoccial \",\r\n    \"status\": true\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/clients/create",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update client",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clientCode\": \"bb88247e-4e81-4ca1-b78b-d69fdb609efe\",\r\n    \"password\": \"1234ED\",\r\n    \"clientStatus\": true,\r\n    \"person\": {\r\n        \"personCode\": \"9e601273-9518-409a-a86c-7e643c75ee9c\",\r\n        \"name\": \"Jose Lema UDT\",\r\n        \"gender\": \"HOMBRE\",\r\n        \"age\": 30,\r\n        \"identification\": \"1004658000\",\r\n        \"phoneNumber\": \"098254785\",\r\n        \"address\": \"Otavalo sn y principal GG\",\r\n        \"status\": true\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/clients/update",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "update"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "inactive client",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/clients/inactive?clientCode=bb88247e-4e81-4ca1-b78b-d69fdb609efe",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "inactive"
+          ],
+          "query": [
+            {
+              "key": "clientCode",
+              "value": "bb88247e-4e81-4ca1-b78b-d69fdb609efe"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "find All clients",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/clients/findAll",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients",
+            "findAll"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create Account",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clientCode\": \"5db0bd20-e031-4a3b-9772-923e949e22ae\",\r\n    \"accountNumber\": \"496825\",\r\n    \"accountType\": \"AHORRO\",\r\n    \"initialBalance\": 540.00,\r\n    \"accountStatus\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/accounts/create",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "accounts",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "inactive account",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/accounts/inactive?accountCode=32fdc6d3-aaa2-4a0f-a1ae-f6961cebc2b3",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "accounts",
+            "inactive"
+          ],
+          "query": [
+            {
+              "key": "accountCode",
+              "value": "32fdc6d3-aaa2-4a0f-a1ae-f6961cebc2b3"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "movements for account and dates",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/transactions/c9bd90f0-a431-4fa7-9ecc-e84b3b21f2d6/movements?startDate=2026-01-14&endDate=2026-01-16",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "transactions",
+            "c9bd90f0-a431-4fa7-9ecc-e84b3b21f2d6",
+            "movements"
+          ],
+          "query": [
+            {
+              "key": "startDate",
+              "value": "2026-01-14"
+            },
+            {
+              "key": "endDate",
+              "value": "2026-01-16"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "find All accounts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/accounts/findAll",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "accounts",
+            "findAll"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "report pdf by identification and dates",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/reports/1004658001/pdf?startDate=2026-01-14&endDate=2026-01-16",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "reports",
+            "1004658001",
+            "pdf"
+          ],
+          "query": [
+            {
+              "key": "startDate",
+              "value": "2026-01-14"
+            },
+            {
+              "key": "endDate",
+              "value": "2026-01-16"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "report pdf by identification and dates",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/reports/1004658001?startDate=2026-01-14&endDate=2026-01-16",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "reports",
+            "1004658001"
+          ],
+          "query": [
+            {
+              "key": "startDate",
+              "value": "2026-01-14"
+            },
+            {
+              "key": "endDate",
+              "value": "2026-01-16"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "movement register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"accountCode\": \"88cb042b-5adc-45ba-8df6-e842cf714cd4\",\r\n    \"transactionType\": \"CREDITO\",\r\n    \"amount\": 800.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}sfk-bank-api/api/v1/transactions/register",
+          "host": [
+            "{{host}}sfk-bank-api"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "transactions",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
